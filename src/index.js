@@ -1,5 +1,1 @@
-function component() {
-    return 'test Webpack'
-  }
-  
-  document.body.appendChild(component());
+console.log('INIT');
