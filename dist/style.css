@@ -132,3 +132,17 @@ body {
     gap: 0.5rem;
     padding: 0.5rem;
 }
+
+/*
+CALENDAR SHEET
+*/
+
+.calenda-sheet-head{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: .25rem 0;
+    font-size: .825rem;
+}

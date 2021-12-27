@@ -29,7 +29,19 @@ export class MyCalendar {
 
     uiContent() {
         const content = document.createElement('div');
-        content.innerHTML = 'ich bin der Content';
+        const contentHead = document.createElement('div');
+        contentHead.className = 'calenda-sheet-head';
+
+        const calenderHead = ["KW", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.", "So."];
+
+        calenderHead.forEach((head) => {
+            const headElement = document.createElement('div');
+            headElement.innerHTML = head;
+            headElement.classList.add('calender-head');
+            contentHead.appendChild(headElement);
+        });
+
+        content.appendChild(contentHead);
         return content;
     }
 
@@ -190,19 +202,23 @@ export class MyCalendar {
 
         months.forEach(month => {
             const subSelect = document.createElement('div');
-
-
             subSelect.className = month === this._month[this.lang][this.date.getMonth()]
                 ? 'myc-subselect-active'
                 : 'myc-subselect';
 
             subSelect.innerHTML = month;
             select.appendChild(subSelect);
-
         });
         return select;
 
     }
+
+
+
+
+
+
+
 
     create() {
         const wrap = document.querySelector(this.target);
@@ -220,9 +236,9 @@ export class MyCalendar {
 
         // Build the calendar
         wrap.appendChild(header);
-        wrap.appendChild(selectYear);
-        wrap.appendChild(selectMonth);
         wrap.appendChild(content);
+        //wrap.appendChild(selectYear);
+        //wrap.appendChild(selectMonth);
 
 
         // End of Creation
