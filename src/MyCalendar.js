@@ -72,7 +72,9 @@ export class MyCalendar {
         const label = document.createElement('div');
         label.innerHTML = labelTxt[type];
         const btnNext = this.uiChangeButton({ txt: `Next ${type}`, date: this.calculateNewDate({ [type]: 1 }) });
+        btnNext.classList.add('btn-next');
         const btnLast = this.uiChangeButton({ txt: `Last ${type}`, date: this.calculateNewDate({ [type]: -1 }) });
+        btnLast.classList.add('btn-last');
 
         wrap.appendChild(btnLast)
         wrap.appendChild(label)
@@ -84,20 +86,36 @@ export class MyCalendar {
     uiHeaderWeekday() {
         const div = document.createElement('div');
         div.innerHTML = this._weekDay[this.lang][this.date.getDay()];
+        div.classList.add('myc-header-weekday');
         return div;
     }
 
     uiHeaderCalendarWeek() {
         const div = document.createElement('div');
-        div.innerHTML = this.calendaWeek(this.date);
+        div.classList.add('myc-header-weeknumber');
+        
+        const label = document.createElement('span');
+        label.innerHTML = 'Kalenderwoche';
+        
+        const kw = document.createElement('span');
+        kw.innerHTML = this.calendaWeek(this.date);
+ 
+        div.appendChild(label);
+        div.appendChild(kw);
+        
         return div;
     }
 
     uiHeader() {
         const header = document.createElement('div');
+        const headerMeta = document.createElement('div');
    
-        header.appendChild(this.uiHeaderWeekday());
-        header.appendChild(this.uiHeaderCalendarWeek());
+        headerMeta.appendChild(this.uiHeaderWeekday());
+        headerMeta.appendChild(this.uiHeaderCalendarWeek());
+        headerMeta.classList.add('myc-header-meta');
+
+        header.appendChild(headerMeta);
+
 
         const headControl = document.createElement('div');
         headControl.classList.add('myc-header');
