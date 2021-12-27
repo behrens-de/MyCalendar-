@@ -102,24 +102,33 @@ body {
 
 
 
-.myc-selectbox {
+.myc-selectbox-year {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.5rem;
   padding: 0.5rem;
   box-sizing: border-box;
   width: 100%;
-  background: #ddd;
+  background: #fff;
 }
 
 .myc-subselect,
 .myc-subselect-active {
-  background: white;
+  background: #eee;
+  color: #555;
   text-align: center;
   padding: 0.5rem 0;
 }
 
 .myc-subselect-active {
-  background: #016394;
+  background: var(--primary);
   color: #fff;
+}
+
+
+.myc-selectbox-month{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem;
 }

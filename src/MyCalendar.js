@@ -93,23 +93,23 @@ export class MyCalendar {
     uiHeaderCalendarWeek() {
         const div = document.createElement('div');
         div.classList.add('myc-header-weeknumber');
-        
+
         const label = document.createElement('span');
         label.innerHTML = 'Kalenderwoche';
-        
+
         const kw = document.createElement('span');
         kw.innerHTML = this.calendaWeek(this.date);
- 
+
         div.appendChild(label);
         div.appendChild(kw);
-        
+
         return div;
     }
 
     uiHeader() {
         const header = document.createElement('div');
         const headerMeta = document.createElement('div');
-   
+
         headerMeta.appendChild(this.uiHeaderWeekday());
         headerMeta.appendChild(this.uiHeaderCalendarWeek());
         headerMeta.classList.add('myc-header-meta');
@@ -132,9 +132,9 @@ export class MyCalendar {
 
 
 
-    uiSelect() {
+    uiSelectYear() {
         const select = document.createElement('div');
-        select.className = 'myc-selectbox'
+        select.className = 'myc-selectbox-year'
 
         const date = this.calculateNewDate({ year: -2 });
         const startYear = date.getFullYear();
@@ -183,14 +183,35 @@ export class MyCalendar {
         return select;
     }
 
+    uiSelectMonth() {
+        const select = document.createElement('div');
+        select.className = 'myc-selectbox-month'
+        const months = this._month[this.lang];
+
+        months.forEach(month => {
+            const subSelect = document.createElement('div');
+
+
+            subSelect.className = month === this._month[this.lang][this.date.getMonth()]
+                ? 'myc-subselect-active'
+                : 'myc-subselect';
+
+            subSelect.innerHTML = month;
+            select.appendChild(subSelect);
+
+        });
+        return select;
+
+    }
+
     create() {
         const wrap = document.querySelector(this.target);
         wrap.innerHTML = null;
 
         // Header
         const header = this.uiHeader();
-
-       const select = this.uiSelect();
+        const selectYear = this.uiSelectYear();
+        const selectMonth = this.uiSelectMonth();
 
         // Content
         const content = this.uiContent();
@@ -199,7 +220,8 @@ export class MyCalendar {
 
         // Build the calendar
         wrap.appendChild(header);
-        wrap.appendChild(select);
+        wrap.appendChild(selectYear);
+        wrap.appendChild(selectMonth);
         wrap.appendChild(content);
 
 
