@@ -13,6 +13,20 @@ export class MyCalendar {
         de: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donerstag', 'Freitag', 'Samstag', 'Sontag']
     }
 
+    isLeapYear() {
+        let date = this.date;
+        let currentYear = date.getFullYear();
+        if ((currentYear % 4 === 0 || currentYear % 400 === 0) && currentYear % 100 !== 0) return true;
+        return false;
+    }
+
+    calendaWeek(date = this.date) {
+        let currentThursday = new Date(date.getTime() + (3 - ((date.getDay() + 6) % 7)) * 86400000);
+        let yearOfThursday = currentThursday.getFullYear();
+        let firstThursday = new Date(new Date(yearOfThursday, 0, 4).getTime() + (3 - ((new Date(yearOfThursday, 0, 4).getDay() + 6) % 7)) * 86400000);
+        return Math.floor(1 + 0.5 + (currentThursday.getTime() - firstThursday.getTime()) / 86400000 / 7);
+    }
+
     uiContent() {
         const content = document.createElement('div');
         content.innerHTML = 'ich bin der Content';
@@ -71,21 +85,28 @@ export class MyCalendar {
         const div = document.createElement('div');
         div.innerHTML = this._weekDay[this.lang][this.date.getDay()];
         return div;
+    }
 
+    uiHeaderCalendarWeek() {
+        const div = document.createElement('div');
+        div.innerHTML = this.calendaWeek(this.date);
+        return div;
     }
 
     uiHeader() {
         const header = document.createElement('div');
-        header.classList.add('myc-header');
-
-
-
-
-
+   
         header.appendChild(this.uiHeaderWeekday());
-        header.appendChild(this.uiHeaderControll('day'));
-        header.appendChild(this.uiHeaderControll('month'));
-        header.appendChild(this.uiHeaderControll('year'));
+        header.appendChild(this.uiHeaderCalendarWeek());
+
+        const headControl = document.createElement('div');
+        headControl.classList.add('myc-header');
+
+        headControl.appendChild(this.uiHeaderControll('day'));
+        headControl.appendChild(this.uiHeaderControll('month'));
+        headControl.appendChild(this.uiHeaderControll('year'));
+
+        header.appendChild(headControl);
 
         return header;
     }
@@ -151,7 +172,7 @@ export class MyCalendar {
         // Header
         const header = this.uiHeader();
 
-        const select = this.uiSelect();
+       const select = this.uiSelect();
 
         // Content
         const content = this.uiContent();
